@@ -8,6 +8,14 @@ const app = express();
 
 app.use(express.json());
 
+app.post(`/user`, async (req, res) => {
+    const result = await prisma.user.create({
+        data: {...req.body},
+    })
+    res.json(result);
+});
+
+
 app.get("/users", async (req, res) => {
     const users = await prisma.user.findMany();
     res.json(users);
@@ -32,13 +40,6 @@ app.get(`/posts/:id`, async (req, res) => {
     })
 
     res.json(post);
-});
-
-app.post(`/user`, async (req, res) => {
-    const result = await prisma.user.create({
-        data: {...req.body},
-    })
-    res.json(result);
 });
 
 
